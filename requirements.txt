@@ -1,0 +1,8 @@
+# Only what is actually imported. scikit-learn and matplotlib were in an early
+# draft and are gone: nothing here uses them, and declaring dependencies you do
+# not import hides what the project really needs.
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+statsmodels>=0.14
+streamlit>=1.36
