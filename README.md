@@ -1,5 +1,9 @@
 # A/B testing and causal inference — checking the methods against known answers
 
+**[▶ Live demo](https://ab-causal.streamlit.app/)** · analyse a live test with a
+threshold that adjusts for how many times you've looked — and an Evidence tab
+showing the simulations each rule was scored against.
+
 [![ci](https://github.com/aghasalim/ab-causal/actions/workflows/ci.yml/badge.svg)](https://github.com/aghasalim/ab-causal/actions/workflows/ci.yml)
 [![python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
