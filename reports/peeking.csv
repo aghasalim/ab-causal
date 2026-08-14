@@ -1,0 +1,5 @@
+rule,type-I error,power,avg n/arm at stop
+fixed horizon (test once),0.052,0.7497,1400
+"peek daily, stop at p<0.05",0.2228,0.8417,702
+"peek daily, Pocock boundary",0.0503,0.601,1010
+"peek daily, mSPRT (always-valid)",0.0094,0.4195,1198

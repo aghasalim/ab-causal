@@ -1,0 +1,5 @@
+% of effect via covariate,true TOTAL effect,plain diff-in-means,CUPED estimate,CUPED error vs total,CUPED SE (unchanged)
+0%,0.1,0.1,0.1004,0.0004,0.019
+25%,0.1,0.1007,0.0752,-0.0248,0.019
+50%,0.1,0.0988,0.0495,-0.0505,0.019
+100%,0.1,0.1008,0.0002,-0.0998,0.019

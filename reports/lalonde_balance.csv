@@ -1,0 +1,9 @@
+covariate,|before|,|after|
+age,0.797,0.114
+education,0.679,0.0
+black,2.432,0.043
+hispanic,0.051,0.04
+married,1.234,0.046
+nodegree,0.905,0.0
+re74,1.57,0.015
+re75,1.747,0.026

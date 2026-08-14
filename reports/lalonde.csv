@@ -1,0 +1,24 @@
+controls,spec,method,att,se,n_control,abs error,n_effective_controls,n_dropped,n_unique_controls_used
+randomised,-,randomised experiment,1794.0,670.99658203125,260.0,0.0,,,
+cps,-,naive difference,-8498.0,583.4320678710938,15992.0,10292.0,,,
+cps,linear,OLS (linear),699.0,616.6538043352782,,1095.0,,,
+cps,linear,IPW (trim=0.0),1180.0,,,614.0,416.0,0.0,
+cps,linear,IPW (trim=0.01),1091.0,,,703.0,355.0,14510.0,
+cps,linear,1-NN PS matching,2074.0,,,280.0,,,124.0
+cps,linear,AIPW (linear),1271.0,,,523.0,,,
+cps,dehejia-wahba,OLS (dehejia-wahba),1307.0,621.3632062875743,,487.0,,,
+cps,dehejia-wahba,IPW (trim=0.0),1553.0,,,241.0,98.0,0.0,
+cps,dehejia-wahba,IPW (trim=0.01),1764.0,,,31.0,86.0,14715.0,
+cps,dehejia-wahba,1-NN PS matching,2895.0,,,1100.0,,,113.0
+cps,dehejia-wahba,AIPW (dehejia-wahba),1411.0,,,384.0,,,
+psid,-,naive difference,-15205.0,657.0762939453125,2490.0,16999.0,,,
+psid,linear,OLS (linear),752.0,783.256956239953,,1042.0,,,
+psid,linear,IPW (trim=0.0),1759.0,,,35.0,42.0,0.0,
+psid,linear,IPW (trim=0.01),1610.0,,,184.0,41.0,1957.0,
+psid,linear,1-NN PS matching,2126.0,,,331.0,,,69.0
+psid,linear,AIPW (linear),2047.0,,,253.0,,,
+psid,dehejia-wahba,OLS (dehejia-wahba),237.0,877.4621307942436,,1557.0,,,
+psid,dehejia-wahba,IPW (trim=0.0),2847.0,,,1052.0,7.0,0.0,
+psid,dehejia-wahba,IPW (trim=0.01),2910.0,,,1116.0,7.0,2044.0,
+psid,dehejia-wahba,1-NN PS matching,1352.0,,,442.0,,,57.0
+psid,dehejia-wahba,AIPW (dehejia-wahba),3843.0,,,2048.0,,,
