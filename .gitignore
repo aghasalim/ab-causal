@@ -13,3 +13,5 @@ data/raw/
 # regenerate byte-identically from `make experiments` in about 9 seconds -- but
 # the deployed app reads them, and Streamlit Community Cloud only ever sees what
 # is in git. Ignoring them shipped an Evidence tab with three empty headings.
+.env
+.env.local
