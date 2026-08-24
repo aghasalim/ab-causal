@@ -24,7 +24,40 @@ before I'd trust it anywhere else.
 
 ---
 
-## Three things I measured
+
+---
+
+## Abstract
+
+A/B testing and causal inference are both areas where the correct answer is
+usually unknown, so methods get adopted on plausibility. This work scores three of
+them against known answers.
+
+**Peeking.** Testing daily and stopping at p<0.05 turns a nominal 5% test into a
+22.3% one. Both standard corrections restore it — Pocock to 5.0%, mSPRT to 0.9% —
+and both cost power, dropping from 0.750 to 0.601 and 0.419. Nothing here is free,
+and the sample saving is what you are buying with that power.
+
+**CUPED.** Variance reduction tracks the theoretical rho^2 across the correlation
+range, and the bias stays at zero, which is the check that the implementation does
+what the derivation says.
+
+**LaLonde.** Because the randomised answer is known ($1,794), observational
+estimators can be scored rather than argued about. The naive difference on
+observational controls returns -$8,498 on CPS and -$15,205 on PSID: wrong by more
+than five times the effect, and the wrong sign. Adjustment recovers the ballpark,
+but the overlap diagnostics show why it is fragile — PSID keeps 1,068 of 2,490
+controls inside the treated propensity range, and a single control can carry an
+IPW weight of 93.8.
+
+**Contributions.** (i) Sequential-testing rules scored on type-I error, power and
+sample together, so the trade is visible. (ii) A CUPED implementation validated
+against its own theory. (iii) LaLonde estimates against the experimental benchmark
+with balance and overlap reported as preconditions rather than results.
+
+---
+
+## 1. Three things I measured
 
 ### 1. Checking your test daily turns a 5% error rate into 22%
 
@@ -152,7 +185,22 @@ can, and for reporting a spread rather than a point estimate where you can't.
 
 ---
 
-## Running it
+![peeking, and what the corrections cost](reports/figures/peeking.png)
+
+![CUPED against its own theory](reports/figures/cuped.png)
+
+![observational estimates against the randomised benchmark](reports/figures/lalonde.png)
+
+![covariate balance before and after](reports/figures/balance.png)
+
+![how much of the control pool is usable](reports/figures/overlap.png)
+
+Balance and overlap are preconditions rather than results. The last figure is the
+reason to distrust a clean-looking ATT: on PSID most of the nominal control pool
+sits outside the treated propensity range, and one unit can carry an IPW weight of
+93.8.
+
+## 2. Running it
 
 ```bash
 make setup && make experiments
@@ -182,7 +230,7 @@ you run it.
 
 ---
 
-## Design notes
+## 3. Design notes
 
 **Why simulate first.** Every decision rule is scored on `simulate.py` before it
 touches real data. `simulate_looks` returns the z-statistic at every interim look
@@ -208,7 +256,7 @@ experiment measured and isn't the right target.
 
 ---
 
-## Layout
+## 4. Repository layout
 
 ```
 src/abcausal/
@@ -222,7 +270,7 @@ app/                Streamlit analyser
 tests/              12 tests asserting the claims
 ```
 
-## License
+## 5. Licence
 
 MIT — see [LICENSE](LICENSE). LaLonde data is public, courtesy of Rajeev Dehejia
 and NBER.
