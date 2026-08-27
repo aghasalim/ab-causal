@@ -1,7 +1,7 @@
-# A/B testing and causal inference — checking the methods against known answers
+# A/B testing and causal inference, checking the methods against known answers
 
 **[▶ Live demo](https://ab-causal.streamlit.app/)** · analyse a live test with a
-threshold that adjusts for how many times you've looked — and an Evidence tab
+threshold that adjusts for how many times you've looked, and an Evidence tab
 showing the simulations each rule was scored against.
 
 [![ci](https://github.com/aghasalim/ab-causal/actions/workflows/ci.yml/badge.svg)](https://github.com/aghasalim/ab-causal/actions/workflows/ci.yml)
@@ -13,8 +13,8 @@ Built by a third-year Applied Computer Science (AI) student.
 The problem with a causal inference project is that you can't tell whether it
 worked. A prediction model can be checked against a held-out label. An estimate
 of "what would have happened otherwise" has nothing to check against, because the
-otherwise never happened. So the usual portfolio version of this — run a t-test
-on a marketing dataset, report a p-value — proves nothing, because it would look
+otherwise never happened. So the usual portfolio version of this, run a t-test
+on a marketing dataset, report a p-value, proves nothing, because it would look
 identical if the method were completely wrong.
 
 So this repo only uses situations where **the true answer is known**: simulations
@@ -34,7 +34,7 @@ usually unknown, so methods get adopted on plausibility. This work scores three 
 them against known answers.
 
 **Peeking.** Testing daily and stopping at p<0.05 turns a nominal 5% test into a
-22.3% one. Both standard corrections restore it — Pocock to 5.0%, mSPRT to 0.9% —
+22.3% one. Both standard corrections restore it, Pocock to 5.0%, mSPRT to 0.9%
 and both cost power, dropping from 0.750 to 0.601 and 0.419. Nothing here is free,
 and the sample saving is what you are buying with that power.
 
@@ -46,7 +46,7 @@ what the derivation says.
 estimators can be scored rather than argued about. The naive difference on
 observational controls returns -$8,498 on CPS and -$15,205 on PSID: wrong by more
 than five times the effect, and the wrong sign. Adjustment recovers the ballpark,
-but the overlap diagnostics show why it is fragile — PSID keeps 1,068 of 2,490
+but the overlap diagnostics show why it is fragile, PSID keeps 1,068 of 2,490
 controls inside the treated propensity range, and a single control can carry an
 IPW weight of 93.8.
 
@@ -61,8 +61,8 @@ with balance and overlap reported as preconditions rather than results.
 
 ### 1. Checking your test daily turns a 5% error rate into 22%
 
-20,000 simulated A/A tests — no real effect at all — looked at once a day for 14
-days. Reproduce with `make peeking`.
+20,000 simulated A/A tests, no real effect at all, looked at once a day for 14
+days. Reproduce with`make peeking`.
 
 | decision rule | type-I error | power | avg n/arm at stop |
 |---|---|---|---|
@@ -77,20 +77,20 @@ which is what 5% should look like. That's what makes the second row believable.
 time.**
 
 The trap in this table is the power column. Naive peeking has the *highest*
-power (84%), which looks like an argument for it. It isn't — it declares
+power (84%), which looks like an argument for it. It isn't, it declares
 significance more often whether or not anything is there. You cannot read that
 column without the one next to it, and a dashboard only shows you one of them.
 
 Both corrections work, and neither is free. The Pocock boundary (|z| > 2.63
 instead of 1.96, calibrated by simulation on a different seed than it's validated
-on) restores 5% error and still stops early on average — 1010 users instead of
+on) restores 5% error and still stops early on average, 1010 users instead of
 1400. mSPRT is *more* conservative than asked: 0.9% error against a nominal 5%.
 That's not a bug. Its guarantee holds at every sample size simultaneously, which
 is strictly stronger than holding at 14 planned looks, and the ~18 points of
 power is what that stronger guarantee costs.
 
 **mSPRT is also not plug-and-play**, which I only found by getting it wrong. It
-needs a `tau` telling it what effect size to expect, and the obvious default
+needs a`tau` telling it what effect size to expect, and the obvious default
 (`tau = sigma`) gave 25% power where a tuned one gave 42%:
 
 | tau / true effect | 10× | 5× | 2.5× | **1×** | 0.5× | 0.2× |
@@ -101,7 +101,7 @@ Set it 5× too small and the method essentially stops working. "Use always-valid
 p-values" is common advice that usually omits the one parameter deciding whether
 it does anything.
 
-### 2. CUPED works exactly as advertised — until the covariate is downstream of treatment
+### 2. CUPED works exactly as advertised, until the covariate is downstream of treatment
 
 Variance reduction tracks the theoretical ρ² closely (`make cuped`):
 
@@ -110,7 +110,7 @@ Variance reduction tracks the theoretical ρ² closely (`make cuped`):
 | measured reduction | 0.085 | 0.255 | 0.526 | 0.810 |
 | predicted (ρ²) | 0.09 | 0.25 | 0.49 | 0.81 |
 
-At ρ=0.9 that's 81% less variance — the same precision from roughly five times
+At ρ=0.9 that's 81% less variance, the same precision from roughly five times
 fewer users, for free, and unbiased throughout.
 
 The failure mode is what I'd actually want to talk about. CUPED's guarantee rests
@@ -124,7 +124,7 @@ treatment moved, and it subtracts away part of the effect you're measuring:
 | CUPED standard error | 0.019 | 0.019 | 0.019 | **0.019** |
 
 True effect is 0.10 in every column. In the last one, CUPED reports **zero
-effect** on a feature that works perfectly — and the standard error is identical
+effect** on a feature that works perfectly, and the standard error is identical
 to the column where it's right. Nothing gets wider, nothing looks unstable. You'd
 ship "no impact" with a tight confidence interval.
 
@@ -133,7 +133,7 @@ failed, because CUPED was correctly returning the *direct* effect while I was
 calling the *total* effect the truth. The real hazard isn't that the number is
 wrong, it's that it silently answers a different question.
 
-### 3. Every observational method got close to the right answer — and I could only tell because I already knew it
+### 3. Every observational method got close to the right answer, and I could only tell because I already knew it
 
 The [LaLonde/NSW](https://users.nber.org/~rdehejia/nswdata.html) job-training
 programme was randomised, so the honest effect is known: **+$1,794** (SE $671).
@@ -172,12 +172,12 @@ Every covariate under the usual 0.1 threshold, and the estimates still range 16�
 on the things you measured; it's silent on everything you didn't.
 
 Overlap explains the fragility. Of 15,992 CPS controls, only 4,472 fall inside
-the treated propensity range and 14,705 have a propensity below 0.01 — most of
+the treated propensity range and 14,705 have a propensity below 0.01, most of
 the "sample" contributes nothing. In PSID a single control carries a weight of
 93.8, meaning one person stands in for 94.
 
 The uncomfortable conclusion, and the reason I built it this way: the estimator
-that nailed it here (IPW, Dehejia–Wahba specification, trimmed — $1,764, off by
+that nailed it here (IPW, Dehejia, Wahba specification, trimmed, $1,764, off by
 $31) is only identifiable as the winner *because the experiment told me the
 answer*. On real observational data I'd have had twenty numbers between $237 and
 $3,843 and no way to choose. That's an argument for running experiments where you
@@ -206,7 +206,7 @@ sits outside the treated propensity range, and one unit can carry an IPW weight 
 make setup && make experiments
 ```
 
-Reproduces every number above. No credentials, no API keys, no paid data — the
+Reproduces every number above. No credentials, no API keys, no paid data, the
 simulations are self-contained and LaLonde is public.
 
 ```bash
@@ -232,9 +232,9 @@ you run it.
 
 ## 3. Design notes
 
-**Why simulate first.** Every decision rule is scored on `simulate.py` before it
-touches real data. `simulate_looks` returns the z-statistic at every interim look
-and all rules consume that same matrix, so comparisons are paired — naive peeking
+**Why simulate first.** Every decision rule is scored on`simulate.py` before it
+touches real data.`simulate_looks` returns the z-statistic at every interim look
+and all rules consume that same matrix, so comparisons are paired, naive peeking
 and the corrected boundary see byte-identical experiments, and differences
 between them aren't simulation noise.
 
@@ -247,7 +247,7 @@ accuracy.
 **Why data is accumulated per-user rather than drawn per-day.** Consecutive looks
 share most of their data, so they're heavily correlated. That correlation *is*
 why peeking misbehaves and why a Bonferroni correction over looks is the wrong
-tool — it would treat 14 nested looks as 14 independent tests and badly
+tool, it would treat 14 nested looks as 14 independent tests and badly
 overcorrect.
 
 **Why ATT rather than ATE for LaLonde.** The survey control pools are a different
@@ -272,5 +272,5 @@ tests/              12 tests asserting the claims
 
 ## 5. Licence
 
-MIT — see [LICENSE](LICENSE). LaLonde data is public, courtesy of Rajeev Dehejia
+MIT, see [LICENSE](LICENSE). LaLonde data is public, courtesy of Rajeev Dehejia
 and NBER.
