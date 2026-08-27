@@ -129,3 +129,12 @@ tests/              12 tests asserting the claims
 
 MIT, see [LICENSE](LICENSE). LaLonde data is public, courtesy of Rajeev Dehejia
 and NBER.
+
+## References
+
+The papers and sources this implementation follows. Each one is here because
+the code uses the method, the dataset or the metric it describes.
+
+- **Deng, Xu, Kohavi, Walker. Improving the Sensitivity of Online Controlled Experiments by Utilizing Pre-Experiment Data. WSDM 2013.** CUPED, the variance reduction implemented here.
+- **Rosenbaum, Rubin. The Central Role of the Propensity Score in Observational Studies for Causal Effects. Biometrika 70, 1983.** propensity scores.
+- **Kohavi, Tang, Xu. Trustworthy Online Controlled Experiments. Cambridge University Press, 2020.** the experiment design practices the harness checks.
