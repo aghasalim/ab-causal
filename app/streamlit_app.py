@@ -31,7 +31,7 @@ st.title("A/B test analyser")
 st.caption(
     "Built around one idea: a result is only as good as the procedure that "
     "produced it. Every rule here was scored against simulations where the true "
-    "effect is known — see the Evidence tab."
+    "effect is known, see the Evidence tab."
 )
 
 analyse, plan, evidence = st.tabs(["Analyse a result", "Plan a test", "Evidence"])
@@ -66,7 +66,7 @@ with analyse:
         st.error(
             f"**Sample ratio mismatch** (p={srm['p_value']:.2e}). The split is not "
             "what you intended, so the arms are not comparable. Fix assignment "
-            "before reading anything below — no analysis repairs a broken split."
+            "before reading anything below. No analysis repairs a broken split."
         )
     else:
         st.success(f"Sample ratio check passed (p={srm['p_value']:.3f}).")
@@ -89,7 +89,7 @@ with analyse:
         st.warning(
             f"This clears the uncorrected 1.96 bar but **not** the {crit:.2f} bar that "
             f"{looks} looks require. With {looks} checks, a true-null experiment "
-            "crosses 1.96 far more than 5% of the time — that is what the Evidence "
+            "crosses 1.96 far more than 5% of the time, which is what the Evidence "
             "tab measures. Keep running."
         )
     else:
@@ -114,7 +114,7 @@ with plan:
     )
     st.caption(
         "An experiment that cannot detect an effect you would act on is not "
-        "inconclusive — it was unanswerable before it started."
+        "inconclusive. It was unanswerable before it started."
     )
 
     target = st.number_input("effect you want to detect (relative %)", 0.1, 100.0, 5.0) / 100
