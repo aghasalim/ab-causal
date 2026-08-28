@@ -134,15 +134,15 @@ can, and for reporting a spread rather than a point estimate where you can't.
 
 ---
 
-![peeking, and what the corrections cost](reports/figures/peeking.png)
+![peeking, and what the corrections cost](../reports/figures/peeking.png)
 
-![CUPED against its own theory](reports/figures/cuped.png)
+![CUPED against its own theory](../reports/figures/cuped.png)
 
-![observational estimates against the randomised benchmark](reports/figures/lalonde.png)
+![observational estimates against the randomised benchmark](../reports/figures/lalonde.png)
 
-![covariate balance before and after](reports/figures/balance.png)
+![covariate balance before and after](../reports/figures/balance.png)
 
-![how much of the control pool is usable](reports/figures/overlap.png)
+![how much of the control pool is usable](../reports/figures/overlap.png)
 
 Balance and overlap are preconditions rather than results. The last figure is the
 reason to distrust a clean-looking ATT: on PSID most of the nominal control pool
