@@ -115,7 +115,7 @@ you run it.
 ---
 
 ## 3. Design notes
-**Why simulate first.** Every decision rule is scored on`simulate.py` before it touches real data.`simulate_looks` returns the z-statistic at every interim look and all rules consume that same matrix, so comparisons are paired, naive peeking and the corrected boundary see byte-identical experiments, and differences between them aren't simulation noise.
+**Why simulate first.** Every decision rule is scored on `simulate.py` before it touches real data. `simulate_looks` returns the z-statistic at every interim look and all rules consume that same matrix, so comparisons are paired, naive peeking and the corrected boundary see byte-identical experiments, and differences between them aren't simulation noise.
 
 Full detail in [notes/METHODS.md](notes/METHODS.md#3-design-notes).
 ## 4. Repository layout

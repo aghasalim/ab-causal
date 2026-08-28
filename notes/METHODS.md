@@ -7,7 +7,7 @@ Long form detail moved out of the README.
 
 
 20,000 simulated A/A tests, no real effect at all, looked at once a day for 14
-days. Reproduce with`make peeking`.
+days. Reproduce with `make peeking`.
 
 | decision rule | type-I error | power | avg n/arm at stop |
 |---|---|---|---|
@@ -35,7 +35,7 @@ is strictly stronger than holding at 14 planned looks, and the ~18 points of
 power is what that stronger guarantee costs.
 
 **mSPRT is also not plug-and-play**, which I only found by getting it wrong. It
-needs a`tau` telling it what effect size to expect, and the obvious default
+needs a `tau` telling it what effect size to expect, and the obvious default
 (`tau = sigma`) gave 25% power where a tuned one gave 42%:
 
 | tau / true effect | 10× | 5× | 2.5× | **1×** | 0.5× | 0.2× |
@@ -153,8 +153,8 @@ sits outside the treated propensity range, and one unit can carry an IPW weight 
 ## 3. Design notes
 
 
-**Why simulate first.** Every decision rule is scored on`simulate.py` before it
-touches real data.`simulate_looks` returns the z-statistic at every interim look
+**Why simulate first.** Every decision rule is scored on `simulate.py` before it
+touches real data. `simulate_looks` returns the z-statistic at every interim look
 and all rules consume that same matrix, so comparisons are paired, naive peeking
 and the corrected boundary see byte-identical experiments, and differences
 between them aren't simulation noise.
