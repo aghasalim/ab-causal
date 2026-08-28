@@ -64,7 +64,14 @@ with balance and overlap reported as preconditions rather than results.
 
 Full detail in [notes/METHODS.md](notes/METHODS.md#1-checking-your-test-daily-turns-a-5-error-rate-into-22).
 ### 2. CUPED works exactly as advertised, until the covariate is downstream of treatment
-Variance reduction tracks the theoretical ρ² closely (`make cuped`): | corr(X, Y) | 0.3 | 0.5 | 0.7 | 0.9 | |---|---|---|---|---| | measured reduction | 0.085 | 0.255 | 0.526 | 0.810 | | predicted (ρ²) | 0.09 | 0.25 | 0.49 | 0.81 | At ρ=0.9 that's 81% less variance, the same precision from roughly five times fewer users, for free, and unbiased throughout.
+Variance reduction tracks the theoretical ρ² closely (`make cuped`):
+
+| corr(X, Y) | 0.3 | 0.5 | 0.7 | 0.9 |
+|---|---|---|---|---|
+| measured reduction | 0.085 | 0.255 | 0.526 | 0.810 |
+| predicted (ρ²) | 0.09 | 0.25 | 0.49 | 0.81 |
+
+At ρ=0.9 that's 81% less variance, the same precision from roughly five times fewer users, for free, and unbiased throughout.
 
 Full detail in [notes/METHODS.md](notes/METHODS.md#2-cuped-works-exactly-as-advertised-until-the-covariate-is-downstream-of-treatment).
 ### 3. Every observational method got close to the right answer, and I could only tell because I already knew it
