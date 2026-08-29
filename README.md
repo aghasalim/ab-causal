@@ -61,6 +61,10 @@ with balance and overlap reported as preconditions rather than results.
 
 ### 1. Checking your test daily turns a 5% error rate into 22%
 20,000 simulated A/A tests, no real effect at all, looked at once a day for 14 days.
+The fixed-horizon test errs 5.2% of the time, which is what a correct 5% test looks
+like, and that is what makes the next number believable: peeking daily and stopping
+at p<0.05 errs 22.3% of the time. Pocock pulls it back to 5.0% and mSPRT to 0.9%.
+Both pay for it in power, 75.0% at fixed horizon against 60.1% and 42.0%.
 
 Full detail in [notes/METHODS.md](notes/METHODS.md#1-checking-your-test-daily-turns-a-5-error-rate-into-22).
 ### 2. CUPED works exactly as advertised, until the covariate is downstream of treatment
@@ -73,9 +77,22 @@ Variance reduction tracks the theoretical ρ² closely (`make cuped`):
 
 At ρ=0.9 that's 81% less variance, the same precision from roughly five times fewer users, for free, and unbiased throughout.
 
+That guarantee rests on the covariate being measured before randomisation. When
+treatment moves the covariate instead, CUPED subtracts the effect away: with all of
+a true 0.10 effect flowing through it, the estimate comes back 0.000. Its standard
+error stays at 0.019, the same as in the column where it is right, so nothing looks
+unstable.
+
 Full detail in [notes/METHODS.md](notes/METHODS.md#2-cuped-works-exactly-as-advertised-until-the-covariate-is-downstream-of-treatment).
 ### 3. Every observational method got close to the right answer, and I could only tell because I already knew it
 The [LaLonde/NSW](https://users.nber.org/~rdehejia/nswdata.html) job-training programme was randomised, so the honest effect is known: **+$1,794** (SE $671).
+
+Adjustment gets back to the right neighbourhood, and that is the trap. Regression,
+IPW, matching and the doubly-robust estimators give 20 adjusted estimates spanning
+$237 to $3,843, with the true $1,794 sitting inside that range along with almost
+everything else. The closest is IPW on the Dehejia-Wahba specification with
+trimming, $1,764, off by $31. Picking that one out as the winner needed the
+experimental answer, which on real observational data I would not have.
 
 ![peeking, and what the corrections cost](reports/figures/peeking.png)
 ![CUPED against its own theory](reports/figures/cuped.png)
@@ -122,7 +139,7 @@ Full detail in [notes/METHODS.md](notes/METHODS.md#3-design-notes).
 
 ```
 src/abcausal/
-  simulate.py       simulation harness — truth is known by construction
+  simulate.py       simulation harness, truth is known by construction
   sequential.py     fixed-horizon, naive peeking, Pocock, mSPRT
   cuped.py          variance reduction, and how it breaks
   observational.py  OLS, IPW, matching, AIPW, balance and overlap diagnostics
