@@ -18,3 +18,50 @@ jobs:
       # Simulation-only: no credentials, no network. The LaLonde experiment
       # needs a download, so it is exercised by the Docker build instead.
       - run: python -m pytest tests/ -q
+
+  # Every number in this repository comes out of one Python simulation, and the
+  # existing tests check that it runs rather than that it is right. These
+  # re-derive the published results independently, most of them by drawing their
+  # own random numbers. Every toolchain below is already on the runner image
+  # except R, so this costs build time rather than install time.
+  cross-language:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install R if the image does not carry it
+        run: |
+          command -v Rscript >/dev/null || {
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends r-base-core
+          }
+
+      - name: Versions
+        run: |
+          sqlite3 --version | cut -d" " -f1
+          gcc --version | head -1
+          go version
+          javac -version
+          ruby --version
+          node --version
+          cargo --version
+          Rscript --version
+
+      - name: Re-derive the published results in every language
+        run: ./verify/verify.sh
+
+      # A check that cannot fail is not evidence. Corrupt a published table,
+      # require the harness to reject it, restore it, require a pass.
+      - name: The harness rejects a corrupted results file
+        run: |
+          sed -i "s/\"peek daily, stop at p<0.05\",0.2228/\"peek daily, stop at p<0.05\",0.1228/" reports/peeking.csv
+          if ./verify/verify.sh > /tmp/corrupt.log 2>&1; then
+            echo "the harness passed on a corrupted peeking.csv"
+            tail -40 /tmp/corrupt.log
+            git checkout -- reports/peeking.csv
+            exit 1
+          fi
+          echo "rejected the corrupted table, as it should"
+          git checkout -- reports/peeking.csv
+          ./verify/verify.sh > /dev/null
+

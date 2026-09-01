@@ -15,3 +15,7 @@ data/raw/
 # is in git. Ignoring them shipped an Evidence tab with three empty headings.
 .env
 .env.local
+
+# Cross-language verification build products. Sources under verify/ are tracked.
+verify/peekmc/target/
+verify/gocheck/gocheck
