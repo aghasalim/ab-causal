@@ -108,7 +108,9 @@ make setup && make experiments
 ```
 
 Reproduces every number above. No credentials, no API keys, no paid data, the
-simulations are self-contained and LaLonde is public.
+simulations are self-contained and LaLonde is public. Every published number is
+also recomputed independently by the implementations in `verify/`, and CI fails
+the build if any of them disagrees.
 
 ```bash
 make test
@@ -135,47 +137,7 @@ you run it.
 **Why simulate first.** Every decision rule is scored on `simulate.py` before it touches real data. `simulate_looks` returns the z-statistic at every interim look and all rules consume that same matrix, so comparisons are paired, naive peeking and the corrected boundary see byte-identical experiments, and differences between them aren't simulation noise.
 
 Full detail in [notes/METHODS.md](notes/METHODS.md#3-design-notes).
-## 4. Every result is derived twice
-
-The whole point of this repo is that a causal estimate has nothing to check
-against, so I only use cases where the true answer is known. That argument has a
-hole in it: every number here comes out of one Python simulation, and the tests
-check that the simulation runs, not that it is right. A simulation is exactly the
-kind of code where a wrong answer still looks entirely plausible.
-
-So the published results are re-derived by eight implementations in eight
-languages, and CI fails if any of them disagrees. Most of them draw their own
-random numbers rather than reading the Python's output, so they are replications
-and not just recomputations.
-
-| implementation | what it re-derives | how |
-| --- | --- | --- |
-| [`verify/lalonde.sql`](verify/lalonde.sql) | the LaLonde estimate table and its spread | SQLite, from the raw estimates |
-| [`verify/cuped_kernel.c`](verify/cuped_kernel.c) | that measured variance reduction equals rho squared | its own simulation, all 5 rows within 4 sd |
-| [`verify/gocheck`](verify/gocheck) | every file in `reports/` is well formed, every derived column rederives | structural |
-| [`verify/verify.R`](verify/verify.R) | the peeking and mSPRT error rates | base R, its own draws, within 4 standard errors |
-| [`verify/Pocock.java`](verify/Pocock.java) | the Pocock boundary | recalibrates it to 2.6248 from its own draws |
-| [`verify/readme_claims.rb`](verify/readme_claims.rb) | every figure quoted in the prose against the file it came from | text to data |
-| [`verify/post_treatment.mjs`](verify/post_treatment.mjs) | the mediation table, and that CUPED returns the direct effect | its own simulation |
-| [`verify/peekmc`](verify/peekmc) | how much of each published rate is Monte Carlo noise | 200,000 replications against the published 20,000 |
-
-Run them with [`./verify/verify.sh`](verify/verify.sh). Each is skipped with a
-message if its toolchain is missing.
-
-**What this caught.** Corrupting the variance reduction at rho = 0.9 is rejected
-by the C, the Go and the Ruby. Corrupting the headline 22.3% peeking rate is
-rejected by the R and the Rust, both of which re-simulate rather than read it,
-and by the Ruby. Changing only the prose, leaving every data file untouched, is
-rejected by the Ruby alone. CI does this to itself on every run: it corrupts
-`reports/peeking.csv`, requires the harness to reject it, restores it and
-requires a pass, because a check that cannot fail is not evidence.
-
-**What the Rust adds.** The published rates are 20,000 replication estimates and
-carry their own Monte Carlo error, which nothing here had measured. Running
-200,000 replications gives a reference each published rate can be compared
-against, and every one lands inside it. That was an assumption before.
-
-## 5. Repository layout
+## 4. Repository layout
 
 ```
 src/abcausal/
@@ -189,7 +151,7 @@ app/                Streamlit analyser
 tests/              12 tests asserting the claims
 ```
 
-## 6. Licence
+## 5. Licence
 
 MIT, see [LICENSE](LICENSE). LaLonde data is public, courtesy of Rajeev Dehejia
 and NBER.
