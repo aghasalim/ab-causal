@@ -155,6 +155,8 @@ of Rajeev Dehejia and NBER.
 
 ## Where the three methods come from
 
-- **Deng, Xu, Kohavi, Walker. Improving the Sensitivity of Online Controlled Experiments by Utilizing Pre-Experiment Data. WSDM 2013.** CUPED, the variance reduction implemented here.
-- **Rosenbaum, Rubin. The Central Role of the Propensity Score in Observational Studies for Causal Effects. Biometrika 70, 1983.** propensity scores.
-- **Kohavi, Tang, Xu. Trustworthy Online Controlled Experiments. Cambridge University Press, 2020.** the experiment design practices the harness checks.
+**Deng, Xu, Kohavi, Walker. Improving the Sensitivity of Online Controlled Experiments by Utilizing Pre-Experiment Data. WSDM 2013.** CUPED, the variance reduction implemented here.
+
+**Rosenbaum, Rubin. The Central Role of the Propensity Score in Observational Studies for Causal Effects. Biometrika 70, 1983.** propensity scores.
+
+**Kohavi, Tang, Xu. Trustworthy Online Controlled Experiments. Cambridge University Press, 2020.** the experiment design practices the harness checks.
