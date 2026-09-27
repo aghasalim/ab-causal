@@ -83,8 +83,7 @@ experimental answer, which on real observational data I would not have.
 
 The overlap diagnostics show why it is fragile. PSID keeps 1,068 of 2,490
 controls inside the treated propensity range, and a single control can carry an
-IPW weight of 93.8. Balance and overlap are reported here as preconditions,
-not as results.
+IPW weight of 93.8. Balance and overlap are reported here as preconditions.
 
 ![observational estimates against the randomised benchmark](reports/figures/lalonde.png)
 ![covariate balance before and after](reports/figures/balance.png)
