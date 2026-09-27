@@ -51,8 +51,7 @@ Variance reduction tracks the theoretical ρ² closely (`make cuped`):
 
 At ρ=0.9 that's 81% less variance, the same precision from roughly five times fewer
 users, for free, and unbiased throughout. Matching theory across the whole
-correlation range is the check that the implementation does what the derivation
-says, instead of something that merely looks like it.
+correlation range is the check that the implementation does exactly what the derivation says.
 
 That guarantee rests on the covariate being measured before randomisation. When
 treatment moves the covariate instead, CUPED subtracts the effect away: with all of
@@ -69,8 +68,7 @@ Worked through at length in [notes/METHODS.md](notes/METHODS.md#2-cuped-works-ex
 
 The [LaLonde/NSW](https://users.nber.org/~rdehejia/nswdata.html) job-training
 programme was randomised, so the true effect is known: **+$1,794** (SE $671).
-That single fact is what lets the rest of this section be measurement instead of
-argument.
+That single fact is what lets the rest of this section be measurement.
 
 Start with the failure. The naive difference on observational controls
 returns -$8,498 on CPS and -$15,205 on PSID: wrong by more than five times the
