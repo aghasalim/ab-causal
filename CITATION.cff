@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: If you use this work, please cite it as below.
+title: "A/B testing and causal inference, checking the methods against known answers"
+abstract: "A/B testing and causal inference scored against known answers: simulations where I set the effect, and a randomised benchmark the observational methods have to recover."
+type: software
+authors:
+  - family-names: Mustafazada
+    given-names: Aghasalim
+    orcid: "https://orcid.org/0009-0001-8746-4582"
+    affiliation: "Howest University of Applied Sciences"
+repository-code: "https://github.com/aghasalim/ab-causal"
+url: "https://aghasalim.github.io/"
+license: MIT
+keywords:
+  - ab testing
+  - causal inference
+  - experimentation
+  - machine learning
+  - sequential testing
+  - statistics
