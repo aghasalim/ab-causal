@@ -52,7 +52,7 @@ Variance reduction tracks the theoretical ρ² closely (`make cuped`):
 At ρ=0.9 that's 81% less variance, the same precision from roughly five times fewer
 users, for free, and unbiased throughout. Matching theory across the whole
 correlation range is the check that the implementation does what the derivation
-says, rather than something that merely looks like it.
+says, instead of something that merely looks like it.
 
 That guarantee rests on the covariate being measured before randomisation. When
 treatment moves the covariate instead, CUPED subtracts the effect away: with all of
@@ -68,8 +68,8 @@ Worked through at length in [notes/METHODS.md](notes/METHODS.md#2-cuped-works-ex
 ## Can observational estimators recover a randomised answer? Close enough to fool me
 
 The [LaLonde/NSW](https://users.nber.org/~rdehejia/nswdata.html) job-training
-programme was randomised, so the honest effect is known: **+$1,794** (SE $671).
-That single fact is what lets the rest of this section be measurement rather than
+programme was randomised, so the true effect is known: **+$1,794** (SE $671).
+That single fact is what lets the rest of this section be measurement instead of
 argument.
 
 Start with the failure. The naive difference on observational controls
@@ -155,8 +155,8 @@ of Rajeev Dehejia and NBER.
 
 ## Where the three methods come from
 
-**Deng, Xu, Kohavi, Walker. Improving the Sensitivity of Online Controlled Experiments by Utilizing Pre-Experiment Data. WSDM 2013.** CUPED, the variance reduction implemented here.
+Deng, Xu, Kohavi, Walker. Improving the Sensitivity of Online Controlled Experiments by Utilizing Pre-Experiment Data. WSDM 2013. CUPED, the variance reduction implemented here.
 
-**Rosenbaum, Rubin. The Central Role of the Propensity Score in Observational Studies for Causal Effects. Biometrika 70, 1983.** propensity scores.
+Rosenbaum, Rubin. The Central Role of the Propensity Score in Observational Studies for Causal Effects. Biometrika 70, 1983. propensity scores.
 
-**Kohavi, Tang, Xu. Trustworthy Online Controlled Experiments. Cambridge University Press, 2020.** the experiment design practices the harness checks.
+Kohavi, Tang, Xu. Trustworthy Online Controlled Experiments. Cambridge University Press, 2020. the experiment design practices the harness checks.
