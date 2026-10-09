@@ -116,3 +116,43 @@ def test_mde_and_required_n_are_inverses():
 
 def test_mde_shrinks_with_sample_size():
     assert diagnostics.mde(10_000, 1.0) < diagnostics.mde(1_000, 1.0)
+
+
+# --- observational estimators on data whose ATT is known -------------------
+
+def confounded(n=6000, seed=0, tau=1500.0):
+    """LaLonde-shaped synthetic data. Younger, black, no-degree, low-earning
+    people are more likely to be treated, and earnings depend on the same
+    covariates, so the raw difference is badly confounded. The effect is a
+    constant tau, so the ATT is tau."""
+    import pandas as pd
+
+    rng = np.random.default_rng(seed)
+    d = pd.DataFrame({
+        "age": rng.uniform(18, 55, n),
+        "education": rng.integers(6, 17, n).astype(float),
+        "black": rng.binomial(1, 0.4, n).astype(float),
+        "hispanic": rng.binomial(1, 0.1, n).astype(float),
+        "married": rng.binomial(1, 0.3, n).astype(float),
+        "nodegree": rng.binomial(1, 0.4, n).astype(float),
+        "re74": rng.gamma(2, 4000, n),
+        "re75": rng.gamma(2, 4000, n),
+    })
+    z = 1.5 - 0.05 * d.age + 0.8 * d.black + 0.6 * d.nodegree - 0.0002 * d.re75
+    d["treat"] = rng.binomial(1, 1 / (1 + np.exp(-z))).astype(float)
+    d["re78"] = (1000 + 80 * d.education + 0.5 * d.re75 + 0.2 * d.re74 - 30 * d.age
+                 + tau * d.treat + rng.normal(0, 1500, n))
+    return d
+
+
+def test_adjusted_estimators_recover_a_known_att_that_naive_misses():
+    from src.abcausal import observational as ob
+
+    tau = 1500.0
+    d = confounded(tau=tau)
+    ps = ob.propensity(d, "linear")
+    assert abs(ob.naive(d)["att"] - tau) > 1000, "the fixture is not confounded"
+    # Both nuisance models are correctly specified here, so AIPW should be close.
+    assert ob.aipw(d, ps)["att"] == pytest.approx(tau, abs=150)
+    assert ob.ipw(d, ps)["att"] == pytest.approx(tau, abs=200)
+    assert ob.match_nn(d, ps)["att"] == pytest.approx(tau, abs=300)
