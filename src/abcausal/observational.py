@@ -82,13 +82,15 @@ def propensity(d: pd.DataFrame, spec: str = "linear") -> np.ndarray:
 def ipw(d: pd.DataFrame, ps: np.ndarray, trim: float = 0.0) -> dict:
     """ATT via inverse-probability weighting: controls reweighted by ps/(1-ps).
 
-    `trim` drops units with extreme propensity scores. Without it a single
+    `trim` drops controls with extreme propensity scores. Without it a single
     control with ps near 1 can dominate the estimate -- the weights are
-    unbounded, which is the practical failure mode of IPW.
+    unbounded, which is the practical failure mode of IPW. Treated units are
+    never dropped: they define the ATT, and trimming them would quietly change
+    the population the effect is averaged over.
     """
     t = d[config.TREATMENT].to_numpy().astype(bool)
     y = d[config.OUTCOME].to_numpy().astype(float)
-    keep = (ps > trim) & (ps < 1 - trim) if trim > 0 else np.ones(len(d), bool)
+    keep = t | ((ps > trim) & (ps < 1 - trim)) if trim > 0 else np.ones(len(d), bool)
     t, y, ps = t[keep], y[keep], ps[keep]
 
     w = np.where(t, 1.0, ps / (1 - ps))
