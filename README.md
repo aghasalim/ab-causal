@@ -109,10 +109,11 @@ the build if any of them disagrees.
 make test
 ```
 
-12 tests. They assert the *claims*, not just that the code runs: that the fixed-horizon
+13 tests. They assert the *claims*, not just that the code runs: that the fixed-horizon
 test really hits 5%, that peeking really inflates it, that the calibrated boundary
-really restores control on a seed it wasn't calibrated on, and that CUPED on a
-mediator really does erase the effect. If a refactor quietly broke a headline
+really restores control on a seed it wasn't calibrated on, that CUPED on a
+mediator really does erase the effect, and that IPW, AIPW and matching recover a
+known effect on confounded synthetic data where the naive difference does not. If a refactor quietly broke a headline
 result, these fail.
 
 ```bash
@@ -145,7 +146,7 @@ src/abcausal/
   diagnostics.py    SRM, MDE, required sample size
   experiments/      the three runnable studies above
 app/                Streamlit analyser
-tests/              12 tests asserting the claims
+tests/              13 tests asserting the claims
 ```
 
 MIT licensed, terms in [LICENSE](LICENSE). The LaLonde data is public, courtesy
