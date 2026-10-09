@@ -79,7 +79,7 @@ Adjustment gets back to the right neighbourhood, and that is the trap. Regressio
 IPW, matching and the doubly-robust estimators give 20 adjusted estimates spanning
 $237 to $3,843, with the true $1,794 sitting inside that range along with almost
 everything else. The closest is IPW on the Dehejia-Wahba specification with
-trimming, $1,764, off by $31. Picking that one out as the winner needed the
+trimming, $1,812, off by $17. Picking that one out as the winner needed the
 experimental answer, which on real observational data I would not have.
 
 The overlap diagnostics show why it is fragile. PSID keeps 1,068 of 2,490
@@ -109,7 +109,7 @@ the build if any of them disagrees.
 make test
 ```
 
-13 tests. They assert the *claims*, not just that the code runs: that the fixed-horizon
+14 tests. They assert the *claims*, not just that the code runs: that the fixed-horizon
 test really hits 5%, that peeking really inflates it, that the calibrated boundary
 really restores control on a seed it wasn't calibrated on, that CUPED on a
 mediator really does erase the effect, and that IPW, AIPW and matching recover a
@@ -146,7 +146,7 @@ src/abcausal/
   diagnostics.py    SRM, MDE, required sample size
   experiments/      the three runnable studies above
 app/                Streamlit analyser
-tests/              13 tests asserting the claims
+tests/              14 tests asserting the claims
 ```
 
 MIT licensed, terms in [LICENSE](LICENSE). The LaLonde data is public, courtesy

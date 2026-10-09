@@ -156,3 +156,17 @@ def test_adjusted_estimators_recover_a_known_att_that_naive_misses():
     assert ob.aipw(d, ps)["att"] == pytest.approx(tau, abs=150)
     assert ob.ipw(d, ps)["att"] == pytest.approx(tau, abs=200)
     assert ob.match_nn(d, ps)["att"] == pytest.approx(tau, abs=300)
+
+
+def test_ipw_trimming_keeps_every_treated_unit():
+    """Trimming is for controls with extreme weights. Dropping a treated unit
+    changes which people the ATT is averaged over."""
+    import pandas as pd
+
+    from src.abcausal import observational as ob
+
+    d = pd.DataFrame({"treat": [1, 1, 0, 0], "re78": [10.0, 0.0, 0.0, 0.0]})
+    ps = np.array([0.5, 0.001, 0.5, 0.5])
+    r = ob.ipw(d, ps, trim=0.01)
+    assert r["att"] == pytest.approx(5.0)
+    assert r["n_dropped"] == 0

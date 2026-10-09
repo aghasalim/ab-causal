@@ -126,11 +126,17 @@ the "sample" contributes nothing. In PSID a single control carries a weight of
 93.8, meaning one person stands in for 94.
 
 The uncomfortable conclusion, and the reason I built it this way: the estimator
-that nailed it here (IPW, Dehejia, Wahba specification, trimmed, $1,764, off by
-$31) is only identifiable as the winner *because the experiment told me the
+that nailed it here (IPW, Dehejia, Wahba specification, trimmed, $1,812, off by
+$17) is only identifiable as the winner *because the experiment told me the
 answer*. On real observational data I'd have had twenty numbers between $237 and
 $3,843 and no way to choose. That's an argument for running experiments where you
 can, and for reporting a spread rather than a point estimate where you can't.
+
+Trimming in `ipw` drops controls with a propensity outside [0.01, 0.99] and
+never a treated unit. The first version dropped treated units too (18 of the
+185 trainees on CPS with the linear specification), which quietly changed the
+population the ATT was averaged over. Fixed on 2026-10-10; the trimmed
+Dehejia-Wahba estimate on CPS moved from $1,764 to $1,812.
 
 ---
 
