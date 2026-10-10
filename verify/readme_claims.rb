@@ -175,6 +175,8 @@ claim("the span of the adjusted estimates", README,
 claim("the closest estimate and what it misses by", README,
       /\$([\d,]+), off by \$([\d,]+)/,
       [closest["att"].to_f, closest["abs error"].to_f], 0.5)
+claim("the closest estimate's bootstrap SE", README,
+      /Its bootstrap standard error is \$([\d,]+)/, closest["se"].to_f, 0.5)
 claim("CUPED on a mediator, and its error bar", README,
       /estimate comes back ([\d.]+)\.[\s\S]{0,60}?stays at ([\d.]+)/,
       [POST[-1]["CUPED estimate"].to_f, POST[-1]["CUPED SE (unchanged)"].to_f], 0.0006)

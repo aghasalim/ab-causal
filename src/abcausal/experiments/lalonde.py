@@ -28,6 +28,8 @@ def run() -> pd.DataFrame:
 
         for spec in ("linear", "dehejia-wahba"):
             ps = ob.propensity(d, spec)
+            se = ob.bootstrap_se(d, spec)
+            print(f"{pool} {spec}: {se.pop('redrawn')} bootstrap resamples redrawn")
             ests = [
                 ob.ols(d, spec),
                 ob.ipw(d, ps, trim=0.0),
@@ -36,6 +38,8 @@ def run() -> pd.DataFrame:
                 ob.aipw(d, ps, spec),
             ]
             for e in ests:
+                if e["method"] in se:
+                    e["se"] = se[e["method"]]
                 rows.append({"controls": pool, "spec": spec, **e,
                              "abs error": abs(e["att"] - truth)})
 

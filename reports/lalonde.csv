@@ -2,23 +2,23 @@ controls,spec,method,att,se,n_control,abs error,n_effective_controls,n_dropped,n
 randomised,-,randomised experiment,1794.0,670.99658203125,260.0,0.0,,,
 cps,-,naive difference,-8498.0,583.4320678710938,15992.0,10292.0,,,
 cps,linear,OLS (linear),699.0,616.6538043352782,,1095.0,,,
-cps,linear,IPW (trim=0.0),1180.0,,,614.0,416.0,0.0,
-cps,linear,IPW (trim=0.01),1441.0,,,353.0,355.0,14492.0,
-cps,linear,1-NN PS matching,2074.0,,,280.0,,,124.0
-cps,linear,AIPW (linear),1271.0,,,523.0,,,
+cps,linear,IPW (trim=0.0),1180.0,631.0427353627069,,614.0,416.0,0.0,
+cps,linear,IPW (trim=0.01),1441.0,635.1806148625769,,353.0,355.0,14492.0,
+cps,linear,1-NN PS matching,2074.0,881.4023388415475,,280.0,,,124.0
+cps,linear,AIPW (linear),1271.0,629.5553236262332,,523.0,,,
 cps,dehejia-wahba,OLS (dehejia-wahba),1307.0,621.3632062875743,,487.0,,,
-cps,dehejia-wahba,IPW (trim=0.0),1553.0,,,241.0,98.0,0.0,
-cps,dehejia-wahba,IPW (trim=0.01),1812.0,,,17.0,86.0,14705.0,
-cps,dehejia-wahba,1-NN PS matching,2895.0,,,1100.0,,,113.0
-cps,dehejia-wahba,AIPW (dehejia-wahba),1411.0,,,384.0,,,
+cps,dehejia-wahba,IPW (trim=0.0),1553.0,780.9295157734921,,241.0,98.0,0.0,
+cps,dehejia-wahba,IPW (trim=0.01),1812.0,791.8068996625218,,17.0,86.0,14705.0,
+cps,dehejia-wahba,1-NN PS matching,2895.0,1025.2623828818143,,1100.0,,,113.0
+cps,dehejia-wahba,AIPW (dehejia-wahba),1411.0,798.9053455931065,,384.0,,,
 psid,-,naive difference,-15205.0,657.0762939453125,2490.0,16999.0,,,
 psid,linear,OLS (linear),752.0,783.256956239953,,1042.0,,,
-psid,linear,IPW (trim=0.0),1759.0,,,35.0,42.0,0.0,
-psid,linear,IPW (trim=0.01),1842.0,,,47.0,41.0,1952.0,
-psid,linear,1-NN PS matching,2126.0,,,331.0,,,69.0
-psid,linear,AIPW (linear),2047.0,,,253.0,,,
+psid,linear,IPW (trim=0.0),1759.0,911.5294663493227,,35.0,42.0,0.0,
+psid,linear,IPW (trim=0.01),1842.0,909.599427216558,,47.0,41.0,1952.0,
+psid,linear,1-NN PS matching,2126.0,1074.530269651295,,331.0,,,69.0
+psid,linear,AIPW (linear),2047.0,900.8781436278654,,253.0,,,
 psid,dehejia-wahba,OLS (dehejia-wahba),237.0,877.4621307942436,,1557.0,,,
-psid,dehejia-wahba,IPW (trim=0.0),2847.0,,,1052.0,7.0,0.0,
-psid,dehejia-wahba,IPW (trim=0.01),2919.0,,,1125.0,7.0,2041.0,
-psid,dehejia-wahba,1-NN PS matching,1352.0,,,442.0,,,57.0
-psid,dehejia-wahba,AIPW (dehejia-wahba),3843.0,,,2048.0,,,
+psid,dehejia-wahba,IPW (trim=0.0),2847.0,1007.2286269951512,,1052.0,7.0,0.0,
+psid,dehejia-wahba,IPW (trim=0.01),2919.0,1070.036375178106,,1125.0,7.0,2041.0,
+psid,dehejia-wahba,1-NN PS matching,1352.0,1348.3997878348412,,442.0,,,57.0
+psid,dehejia-wahba,AIPW (dehejia-wahba),3843.0,2036.3387561783552,,2048.0,,,
