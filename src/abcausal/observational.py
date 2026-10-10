@@ -124,6 +124,37 @@ def aipw(d: pd.DataFrame, ps: np.ndarray, spec: str = "linear") -> dict:
     return {"method": f"AIPW ({spec})", "att": float((y[t] - mu0[t]).mean() - corr)}
 
 
+def bootstrap_se(d: pd.DataFrame, spec: str, n_boot: int = 200, seed: int = 0) -> dict:
+    """Bootstrap standard errors for IPW (both trims), matching and AIPW.
+
+    Treated and control rows are resampled separately, so every replicate keeps
+    the same number of each, and the propensity model is refitted on every
+    replicate, so its uncertainty is part of the SE. For 1-NN matching the
+    bootstrap is known not to be valid (Abadie and Imbens 2008), so treat that
+    SE as a rough guide only.
+    """
+    rng = np.random.default_rng(seed)
+    t_idx = np.flatnonzero(d[config.TREATMENT].to_numpy() == 1)
+    c_idx = np.flatnonzero(d[config.TREATMENT].to_numpy() == 0)
+    draws: dict[str, list[float]] = {}
+    redrawn = 0
+    while len(draws.get("1-NN PS matching", [])) < n_boot:
+        idx = np.concatenate([rng.choice(t_idx, len(t_idx)), rng.choice(c_idx, len(c_idx))])
+        b = d.iloc[idx].reset_index(drop=True)
+        try:
+            ps = propensity(b, spec)
+        except np.linalg.LinAlgError:
+            # a resample can leave a design column constant (few treated
+            # Hispanics), so the logit is not identified; draw again
+            redrawn += 1
+            continue
+        for e in (ipw(b, ps, trim=0.0), ipw(b, ps, trim=0.01), match_nn(b, ps), aipw(b, ps, spec)):
+            draws.setdefault(e["method"], []).append(e["att"])
+    out = {m: float(np.std(v, ddof=1)) for m, v in draws.items()}
+    out["redrawn"] = redrawn
+    return out
+
+
 def standardised_diff(d: pd.DataFrame, weights: np.ndarray | None = None) -> pd.DataFrame:
     """Standardised mean differences per covariate. |SMD| < 0.1 is the usual
     rule of thumb for adequate balance."""

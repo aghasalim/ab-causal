@@ -158,6 +158,21 @@ def test_adjusted_estimators_recover_a_known_att_that_naive_misses():
     assert ob.match_nn(d, ps)["att"] == pytest.approx(tau, abs=300)
 
 
+def test_bootstrap_se_matches_the_spread_over_fresh_samples():
+    """The bootstrap SE from one sample should be close to the actual spread of
+    the estimate over many independent samples from the same process."""
+    from src.abcausal import observational as ob
+
+    def aipw(d):
+        return ob.aipw(d, ob.propensity(d, "linear"))["att"]
+
+    spread = np.std([aipw(confounded(n=1500, seed=s)) for s in range(1, 41)], ddof=1)
+    se = ob.bootstrap_se(confounded(n=1500, seed=0), "linear", n_boot=100)
+    assert set(se) == {"IPW (trim=0.0)", "IPW (trim=0.01)", "1-NN PS matching",
+                       "AIPW (linear)", "redrawn"}
+    assert 0.6 < se["AIPW (linear)"] / spread < 1.6
+
+
 def test_ipw_trimming_keeps_every_treated_unit():
     """Trimming is for controls with extreme weights. Dropping a treated unit
     changes which people the ATT is averaged over."""

@@ -80,7 +80,8 @@ Adjusting gets you back near the right answer, and that's the trap. I ran regres
 IPW, matching and the doubly-robust estimators and got 20 adjusted estimates. They go
 from $237 to $3,843, with the true $1,794 inside that range along with almost
 everything else. The closest is IPW on the Dehejia-Wahba specification with
-trimming, at $1,812, off by $17. But I could only pick it out because I had the
+trimming, at $1,812, off by $17. Its bootstrap standard error is $792, so
+landing that close was mostly luck. But I could only pick it out because I had the
 experimental answer. On real observational data I wouldn't.
 
 The overlap diagnostics show why it's fragile. PSID keeps 1,068 of 2,490
@@ -110,12 +111,13 @@ them disagree.
 make test
 ```
 
-14 tests. I wrote them to check the results themselves, not only that the code runs.
+15 tests. I wrote them to check the results themselves, not only that the code runs.
 The fixed-horizon test has to actually hit 5%, and peeking has to actually inflate it.
 The calibrated boundary has to restore control on a seed it wasn't calibrated on.
 CUPED on a mediator has to erase the effect. And IPW, AIPW and matching have to
 recover a known effect on confounded synthetic data where the naive difference
-doesn't. If a refactor quietly broke a headline result, these would fail.
+doesn't. The bootstrap standard errors have to match the real spread of the
+estimate over fresh samples. If a refactor quietly broke a headline result, these would fail.
 
 ```bash
 make app
@@ -147,7 +149,7 @@ src/abcausal/
   diagnostics.py    SRM, MDE, required sample size
   experiments/      the three runnable studies above
 app/                Streamlit analyser
-tests/              14 tests asserting the claims
+tests/              15 tests asserting the claims
 ```
 
 It's MIT licensed, see [LICENSE](LICENSE). The LaLonde data is public, thanks to
