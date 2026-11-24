@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/banner.jpg" alt="Line drawing of two groups of dots with a balance scale between them and a causal arrow" width="100%"></p>
+
 # A/B testing and causal inference, checking the methods against known answers
 
 **[▶ Live demo](https://ab-causal.streamlit.app/)** · analyse a live test with a
@@ -24,6 +26,19 @@ trusted it anywhere else.
 I tried three methods. Below is how each one scored and what it cost.
 
 ---
+
+<details>
+<summary>Contents</summary>
+
+- [Does peeking really break a test? Yes, four-fold](#does-peeking-really-break-a-test-yes-four-fold)
+- [Does CUPED deliver what the derivation promises? Yes, until you break its one assumption](#does-cuped-deliver-what-the-derivation-promises-yes-until-you-break-its-one-assumption)
+- [Can observational estimators recover a randomised answer? Close enough to fool me](#can-observational-estimators-recover-a-randomised-answer-close-enough-to-fool-me)
+- [How to run the three studies](#how-to-run-the-three-studies)
+- [Why the simulator comes first](#why-the-simulator-comes-first)
+- [What lives where](#what-lives-where)
+- [Where the three methods come from](#where-the-three-methods-come-from)
+
+</details>
 
 ## Does peeking really break a test? Yes, four-fold
 
