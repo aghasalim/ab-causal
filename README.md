@@ -1,5 +1,3 @@
-<p align="center"><img src="assets/banner.jpg" alt="Line drawing of two groups of dots with a balance scale between them and a causal arrow" width="100%"></p>
-
 # A/B testing and causal inference, checking the methods against known answers
 
 **[▶ Live demo](https://ab-causal.streamlit.app/)** · analyse a live test with a
